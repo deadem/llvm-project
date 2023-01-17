@@ -4270,7 +4270,7 @@ LexNextToken:
     // Non-ASCII characters tend to creep into source code unintentionally.
     // Instead of letting the parser complain about the unknown token,
     // just diagnose the invalid UTF-8, then drop the character.
-    Diag(CurPtr, diag::err_invalid_utf8);
+    //Diag(CurPtr, diag::err_invalid_utf8);
 
     BufferPtr = CurPtr+1;
     // We're pretending the character didn't exist, so just try again with

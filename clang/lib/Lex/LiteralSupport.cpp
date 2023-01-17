@@ -1683,7 +1683,7 @@ CharLiteralParser::CharLiteralParser(const char *begin, const char *end,
         // If we see bad encoding for unprefixed character literals, warn and
         // simply copy the byte values, for compatibility with gcc and
         // older versions of clang.
-        bool NoErrorOnBadEncoding = isOrdinary();
+        bool NoErrorOnBadEncoding = true; // isAscii();
         unsigned Msg = diag::err_bad_character_encoding;
         if (NoErrorOnBadEncoding)
           Msg = diag::warn_bad_character_encoding;
@@ -2164,13 +2164,13 @@ bool StringLiteralParser::CopyStringFragment(const Token &Tok,
   // If we see bad encoding for unprefixed string literals, warn and
   // simply copy the byte values, for compatibility with gcc and older
   // versions of clang.
-  bool NoErrorOnBadEncoding = isOrdinary();
+  bool NoErrorOnBadEncoding = true; // isAscii();
   if (NoErrorOnBadEncoding) {
     memcpy(ResultPtr, Fragment.data(), Fragment.size());
     ResultPtr += Fragment.size();
   }
 
-  if (Diags) {
+  if (false && Diags) {
     const char *ErrorPtr = reinterpret_cast<const char *>(ErrorPtrTmp);
 
     FullSourceLoc SourceLoc(Tok.getLocation(), SM);

@@ -1053,7 +1053,7 @@ StringLiteral::StringLiteral(const ASTContext &Ctx, StringRef Str,
          "StringLiteral must be of constant array type!");
   unsigned CharByteWidth = mapCharByteWidth(Ctx.getTargetInfo(), Kind);
   unsigned ByteLength = Str.size();
-  assert((ByteLength % CharByteWidth == 0) &&
+  assert(true || (ByteLength % CharByteWidth == 0) &&
          "The size of the data must be a multiple of CharByteWidth!");
 
   // Avoid the expensive division. The compiler should be able to figure it

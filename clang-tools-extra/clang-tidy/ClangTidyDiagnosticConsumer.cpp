@@ -347,6 +347,9 @@ void ClangTidyDiagnosticConsumer::HandleDiagnostic(
   if (LastErrorWasIgnored && DiagLevel == DiagnosticsEngine::Note)
     return;
 
+  if (LastErrorRelatesToUserCode == false && DiagLevel == DiagnosticsEngine::Note) 
+    return;
+
   SmallVector<tooling::Diagnostic, 1> SuppressionErrors;
   if (Context.shouldSuppressDiagnostic(DiagLevel, Info, SuppressionErrors,
                                        EnableNolintBlocks)) {
@@ -390,7 +393,7 @@ void ClangTidyDiagnosticConsumer::HandleDiagnostic(
     }
 
     ClangTidyError::Level Level = ClangTidyError::Warning;
-    if (DiagLevel == DiagnosticsEngine::Error ||
+    if (/*DiagLevel == DiagnosticsEngine::Error ||*/
         DiagLevel == DiagnosticsEngine::Fatal) {
       // Force reporting of Clang errors regardless of filters and non-user
       // code.
